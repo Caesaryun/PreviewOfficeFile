@@ -16,7 +16,8 @@ import com.it.utils.OpenOfficeUtil;
 import cn.hutool.core.util.IdUtil;
 
 @RestController
-public class FileTest {
+@RequestMapping("/test")
+public class TestController {
 
 	 /*
 	  * 简单示例

@@ -18,8 +18,6 @@ public class RunnableUtil implements Runnable{
 	public RunnableUtil(String name,String pdfname){
 		threadName = name;
 		newFilePdfName = pdfname;
-		//System.out.println("创建 " + threadName);
-		//System.out.println("传递文件名称：" + newFilePdfName);
 	}
 	
 	public void run() {
@@ -47,8 +45,7 @@ public class RunnableUtil implements Runnable{
 	
 	
 	public void start() {
-		//System.out.println("开始 " + threadName);
-		if(t==null)  //若线程为空则开启
+		if(t==null)  
 		{
 			t = new Thread(this,threadName);
 			t.start();

@@ -28,8 +28,7 @@ import cn.hutool.core.util.IdUtil;
 /*
  * 1.该类主要为OpenOffice工具类，其中包含多个方法
  * 2.使用示例1：byte[] pdfbyte = OpenOfficeUtil.方法名（参数...);
- *             ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(pdfbyte,headers,HttpStatus.OK);
-			   
+ *   ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(pdfbyte,headers,HttpStatus.OK);   
  * 3.使用示例2: ResponseEntity<byte[]> responseEntity = OpenOfficeUtil.方法名Use(...)
  * 4.实现预览，通过在前台页面发送请求获取ResponseEntity<byte[]>即可自动预览pdf文件
  * 5.后续：后续会将FastDFS也整合到该项目，以便做到轻松的通过获取远程文件进行预览操作
@@ -39,25 +38,18 @@ public class OpenOfficeUtil {
 	/*
 	 * 1.将文件转为字节数组
 	 * file change to byte[]
-	 * 
-	 * 2.参数：
 	 * @param:File file 为文件
 	 */
 	public static byte[] fileToByteArray(File file) throws IOException {
 		byte[] fileByte = new byte[(int)file.length()];
-		// FileInputStream是InputStream的子类,用于从文件中读取信息
-        FileInputStream fis = new FileInputStream(file);
 		
-        // 利用ByteArrayOutputStream将FileInputStream文件数据读出来
-        // ByteArrayOutputStream用来在内存中创建缓冲区,所有送往"流"的数据都要放置在此缓冲区
+        FileInputStream fis = new FileInputStream(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         byte[] b = new byte[1024];
         int len;
         while((len = fis.read(b)) != -1 ) {
             bos.write(b, 0, len);
         }
-
-        // toByteArray()方法得到文件的字节数组
         fileByte = bos.toByteArray();
         
         
@@ -71,7 +63,6 @@ public class OpenOfficeUtil {
 	 * @param: filename 写入之后的文件名称 "xxx.docx"
 	 * 
 	 */
-	
 	public static File byteToFile(byte[] bfile,String filePath,String fileName)
 	{
 		BufferedOutputStream bos = null;
@@ -79,14 +70,14 @@ public class OpenOfficeUtil {
 		File file = null;
 		
 		try {
-            File dir = new File(filePath);  //创建了一个文件目录，若不存在则建立该目录
-            if(!dir.exists()&&dir.isDirectory()){//判断文件目录是否存在
+            File dir = new File(filePath);  
+            if(!dir.exists()&&dir.isDirectory()){
                 dir.mkdirs();
             }
-            file = new File(filePath+File.separatorChar+fileName);  //创建一个文件，
+            file = new File(filePath+File.separatorChar+fileName);  
             fos = new FileOutputStream(file);     
             bos = new BufferedOutputStream(fos);
-            bos.write(bfile);   //将字节写入文件中
+            bos.write(bfile);  
             
             return file;
             
@@ -115,8 +106,6 @@ public class OpenOfficeUtil {
 	
 	/*
 	 *1. Object转化为byte[]
-	 *
-	 *2.参数：
 	 *@param:Object类型
 	 */
 	public static byte[] Object2Bytes(Object obj)
@@ -127,8 +116,6 @@ public class OpenOfficeUtil {
 	
 	/*
 	 * 1.判断文件是否为office格式文件
-	 * 
-	 * 2.参数：
 	 * @param：String ext 为文件扩展名
 	 */
 	
@@ -148,8 +135,6 @@ public class OpenOfficeUtil {
 	 * 1.用于删除产生的pdf文件
 	 * 这里和RunnableUtil配合使用
 	 * 且应该在这里判断一下系统，以便配合linux系统的路径进行删除文件
-	 * 
-	 * 2.参数：
 	 * @param : String pdfName 为pdf文件名称
 	 */
 	
@@ -162,15 +147,13 @@ public class OpenOfficeUtil {
 		String filePath = " ";
 		String osName = System.getProperty("os.name");
 		if(Pattern.matches("Linux.*",osName))
-		{      //System.out.println("当前处于Linux系统.");
+		{      
 			   filePath = "/usr/local/TempOpenOffice/";
 		}
 		else if(Pattern.matches("Windows.*", osName)) {
-			   //System.out.println("当前处于Windows系统.");
 			   filePath = "D:\\OpenOfficeTemp\\";
 		}
 		
-	    //匹配上相应的路径，得到如D:\\OpenOfficeTemp\\pdfName,或 /usr/local/TempOpenOffice/pdfName
 		boolean isokdel = false;
 		File f = new File(filePath+pdfName);
 		if(f.exists())
@@ -189,8 +172,6 @@ public class OpenOfficeUtil {
 	 * 2.若将该项目放置于linux上的时候，则会在linux环境下进行创建相关数据，然后进行返回相关信息给客户端
 	 * 3.之后还应调用删除pdf文件的线程
 	 * 4.传入文件路径即可，无论是windows或linux皆可
-	 * 
-	 * 5.参数：
 	 * @param： String inputfilepath 为文件的路径字段，window linux都ok.
 	 */
 	public static byte[]  OfficeFileToPdf(String inputfilepath) throws Exception{
@@ -201,7 +182,7 @@ public class OpenOfficeUtil {
 		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 		
 		if(!isOfficeFormat(fileType))
-		 { /*2.不满足文件要求 */
+		 {   /*2.不满足文件要求 */
 		    throw new Exception("请选择office格式文件!");
 		 }
 		
@@ -209,56 +190,39 @@ public class OpenOfficeUtil {
 		
         byte[] buffFile = OpenOfficeUtil.fileToByteArray(officefile);
 		
-		
-		
-		System.out.println("Accept : accept fastdfs' data success.");
-		
-		//2.将字节数组直接放置于输入流中，这是第一个 @param inputStream
 		InputStream inputStream = new ByteArrayInputStream(buffFile);
-		
-		System.out.println("inputStream: "+inputStream.toString());
-		//3.设置转换之后的pdfname，且设置文件夹路径
-		//  创建了一个文件目录，若不存在则建立该目录
 		
 		String filePath = " ";
 		String osName = System.getProperty("os.name");
 		if(Pattern.matches("Linux.*",osName))
-		{      //System.out.println("当前处于Linux系统.");
+		{     
 			   filePath = "/usr/local/TempOpenOffice";
 		}
 		else if(Pattern.matches("Windows.*", osName)) {
-			   //System.out.println("当前处于Windows系统.");
 			   filePath = "D:\\OpenOfficeTemp";
 		}
 		
 		File dir = new File(filePath); 
-		//  判断文件目录是否存在,若不存在则建立OpenOffice文件夹，且是文件夹
         if(!dir.exists()){ 
-        	
-            dir.mkdirs();  //创建了相关文件夹，但若是当前如D盘不存在则执行下方，linux则不会出现该情况
+            dir.mkdirs(); 
         }
 		
-        //4.建立好一个输出pdf文件，之后通过OutputStream向该文件写入数据
 		File outputfile = new File(filePath+File.separatorChar+newFilePdfName);
-		//  若该文件已经存在则删除
 		if(outputfile.exists())  
 		{
 			outputfile.delete();
 		}
-		//  创建一个新的pdf文件
 		outputfile.createNewFile(); 
-		//  @param outputStream
 		OutputStream outputStream = new FileOutputStream(outputfile);
 		
-		//5.创建两个文件类型的参数
 		DefaultDocumentFormatRegistry formatReg = new DefaultDocumentFormatRegistry();
 		DocumentFormat officeFormat = formatReg.getFormatByFileExtension(fileType);
 		DocumentFormat pdfFormat = formatReg.getFormatByFileExtension("pdf");
 		
-		//6.开始进行转换，默认host为localhost,当项目部署于linux环境下，则自动为所处环境
 		OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100); 
 		connection.connect();
 		DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
+		
 		System.out.println("Connect: connect openoffice success.");
 		
 		converter.convert(inputStream,officeFormat,outputStream,pdfFormat);
@@ -267,13 +231,9 @@ public class OpenOfficeUtil {
 		
 		System.out.println("Convert: office format file converts to pdf success.");
 		
-		//7.转换成功后，便可以进行pdf转换为byte[]类型，数据已经写入了outputfile中
 		byte[] pdfByte =  OpenOfficeUtil.fileToByteArray(outputfile);
 		System.out.println("Convert: pdf file converts to byte[] success.");
 		
-		//8.转换成功，pdf文件进行删除即可,应先删除文件，而对于文件夹则不应删除，否则有多个用户同时使用
-		//  该文件夹时则会出现问题，所以删除自己产生的文件即可
-		//  开启删除文件线程
 		RunnableUtil R1 = new RunnableUtil("delete pdf file",newFilePdfName);
 		R1.start();
 		
@@ -284,34 +244,30 @@ public class OpenOfficeUtil {
 	 * 1.这里传入office文件的字节数组即可
 	 * 先通过字节数组获取到文件扩展名，判断是否满足要求
 	 * 返回pdf的字节数组
-	 * 
-	 * 2.参数：
 	 * @param byte[] buffFile :为传递来的office文件字节数组
 	 * @param fileType 为office文件的扩展名
 	 */
 	public static  byte[]  OfficeFileToPdf(byte[] buffFile,String fileType) throws Exception{
 		/* 1.传入文件，将字节数组传入其中进行转化为文件，通过文件获取扩展名等信息  */
-		
-
 		String filePath = " ";
 		String osName = System.getProperty("os.name");
 		if(Pattern.matches("Linux.*",osName))
-		{      //System.out.println("当前处于Linux系统.");
+		{      
 			   filePath = "/usr/local/TempOpenOffice";
 		}
-		else if(Pattern.matches("Windows.*", osName)) {
-			   //System.out.println("当前处于Windows系统.");
+		else if(Pattern.matches("Windows.*", osName)) 
+		{
 			   filePath = "D:\\OpenOfficeTemp";
 		}
 		File dir = new File(filePath); 
-		//  判断文件目录是否存在,若不存在则建立OpenOffice文件夹，且是文件夹
+		
         if(!dir.exists()){ 
-            dir.mkdirs();  //创建了相关文件夹，但若是当前如D盘不存在则执行下方，linux则不会出现该情况
+            dir.mkdirs(); 
         }
 		
 		
 		if(!isOfficeFormat(fileType))
-		 { /*2.不满足文件要求 */
+		 {   /*2.不满足文件要求 */
 		    throw new Exception("请选择office格式文件!");
 		 }
 		
@@ -319,32 +275,21 @@ public class OpenOfficeUtil {
 		
 		String newFilePdfName =  IdUtil.fastSimpleUUID() + ".pdf";
 		
-		//2.一切条件都满足，直接将字节数组直接放置于输入流中，这是第一个 @param inputStream
 		InputStream inputStream = new ByteArrayInputStream(buffFile);
 		
 		System.out.println("inputStream: "+inputStream.toString());
-		//3.设置转换之后的pdfname，且设置文件夹路径
-		//  创建了一个文件目录，若不存在则建立该目录
-		
-		
-        //4.建立好一个输出pdf文件，之后通过OutputStream向该文件写入数据
 		File outputfile = new File(filePath+File.separatorChar+newFilePdfName);
-		//  若该文件已经存在则删除
+		
 		if(outputfile.exists())  
 		{
 			outputfile.delete();
 		}
-		//  创建一个新的pdf文件
 		outputfile.createNewFile(); 
-		//  @param outputStream
 		OutputStream outputStream = new FileOutputStream(outputfile);
-		
-		//5.创建两个文件类型的参数
 		DefaultDocumentFormatRegistry formatReg = new DefaultDocumentFormatRegistry();
 		DocumentFormat officeFormat = formatReg.getFormatByFileExtension(fileType);
 		DocumentFormat pdfFormat = formatReg.getFormatByFileExtension("pdf");
 		
-		//6.开始进行转换，默认host为localhost,当项目部署于linux环境下，则自动为所处环境
 		OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100); 
 		connection.connect();
 		DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
@@ -355,13 +300,10 @@ public class OpenOfficeUtil {
 		connection.disconnect();
 		
 		System.out.println("Convert: office format file converts to pdf success.");
-		
-		//7.转换成功后，便可以进行pdf转换为byte[]类型，数据已经写入了outputfile中
+
 		byte[] pdfByte =  OpenOfficeUtil.fileToByteArray(outputfile);
 		System.out.println("Convert: pdf file converts to byte[] success.");
 		
-		//8.转换成功，pdf文件进行删除即可,应先删除文件，而对于文件夹则不应删除，否则有多个用户同时使用
-		//  该文件夹时则会出现问题，所以删除自己产生的文件即可
 		RunnableUtil R2 = new RunnableUtil("delete pdf file",newFilePdfName);
 		R2.start();
 		
@@ -370,8 +312,6 @@ public class OpenOfficeUtil {
 	
 	/*
 	 * 1.传入office文件
-	 * 
-	 * 2.参数：
 	 * @param: 为传入的文件
 	 */
 	
@@ -381,61 +321,44 @@ public class OpenOfficeUtil {
 		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 		
 		if(!isOfficeFormat(fileType))
-		 { /*2.不满足文件要求 */
+		 {   /*2.不满足文件要求 */
 		    throw new Exception("请选择office格式文件!");
 		 }
 		
 		String newFilePdfName =  IdUtil.fastSimpleUUID() + ".pdf";
 		
         byte[] buffFile = OpenOfficeUtil.fileToByteArray(officefile);
-		
-		
-		
 		System.out.println("Accept : accept fastdfs' data success.");
-		
-		//2.将字节数组直接放置于输入流中，这是第一个 @param inputStream
 		InputStream inputStream = new ByteArrayInputStream(buffFile);
-		
-		System.out.println("inputStream: "+inputStream.toString());
-		//3.设置转换之后的pdfname，且设置文件夹路径
-		//  创建了一个文件目录，若不存在则建立该目录
 		
 		String filePath = " ";
 		String osName = System.getProperty("os.name");
 		if(Pattern.matches("Linux.*",osName))
-		{      //System.out.println("当前处于Linux系统.");
+		{      
 			   filePath = "/usr/local/TempOpenOffice";
 		}
-		else if(Pattern.matches("Windows.*", osName)) {
-			   //System.out.println("当前处于Windows系统.");
+		else if(Pattern.matches("Windows.*", osName))
+		{
 			   filePath = "D:\\OpenOfficeTemp";
 		}
 		
 		File dir = new File(filePath); 
-		//  判断文件目录是否存在,若不存在则建立OpenOffice文件夹，且是文件夹
         if(!dir.exists()){ 
-        	
-            dir.mkdirs();  //创建了相关文件夹，但若是当前如D盘不存在则执行下方，linux则不会出现该情况
+            dir.mkdirs(); 
         }
 		
-        //4.建立好一个输出pdf文件，之后通过OutputStream向该文件写入数据
 		File outputfile = new File(filePath+File.separatorChar+newFilePdfName);
-		//  若该文件已经存在则删除
 		if(outputfile.exists())  
 		{
 			outputfile.delete();
 		}
-		//  创建一个新的pdf文件
 		outputfile.createNewFile(); 
-		//  @param outputStream
 		OutputStream outputStream = new FileOutputStream(outputfile);
 		
-		//5.创建两个文件类型的参数
 		DefaultDocumentFormatRegistry formatReg = new DefaultDocumentFormatRegistry();
 		DocumentFormat officeFormat = formatReg.getFormatByFileExtension(fileType);
 		DocumentFormat pdfFormat = formatReg.getFormatByFileExtension("pdf");
 		
-		//6.开始进行转换，默认host为localhost,当项目部署于linux环境下，则自动为所处环境
 		OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100); 
 		connection.connect();
 		DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
@@ -447,14 +370,9 @@ public class OpenOfficeUtil {
 		
 		System.out.println("Convert: office format file converts to pdf success.");
 		
-		//7.转换成功后，便可以进行pdf转换为byte[]类型，数据已经写入了outputfile中
 		byte[] pdfByte =  OpenOfficeUtil.fileToByteArray(outputfile);
 		System.out.println("Convert: pdf file converts to byte[] success.");
 		
-		//8.转换成功，pdf文件进行删除即可,应先删除文件，而对于文件夹则不应删除，否则有多个用户同时使用
-		//  该文件夹时则会出现问题，所以删除自己产生的文件即可
-		//  开启删除文件线程
-
 		RunnableUtil R2 = new RunnableUtil("delete pdf file",newFilePdfName);
 		R2.start();
 		
@@ -463,8 +381,6 @@ public class OpenOfficeUtil {
 	
 	/*
 	 * 1.选择直接返回可用的ResponseEntity<byte[]>类型数据
-	 * 
-	 * 2.参数：
 	 * @param:为传入文件
 	 */
 	
@@ -474,7 +390,7 @@ public class OpenOfficeUtil {
 		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 		
 		if(!isOfficeFormat(fileType))
-		 { /*2.不满足文件要求 */
+		 {   /*2.不满足文件要求 */
 		    throw new Exception("请选择office格式文件!");
 		 }
 		
@@ -485,50 +401,38 @@ public class OpenOfficeUtil {
 		
 		
 		System.out.println("Accept : accept fastdfs' data success.");
-		
-		//2.将字节数组直接放置于输入流中，这是第一个 @param inputStream
+
 		InputStream inputStream = new ByteArrayInputStream(buffFile);
 		
 		System.out.println("inputStream: "+inputStream.toString());
-		//3.设置转换之后的pdfname，且设置文件夹路径
-		//  创建了一个文件目录，若不存在则建立该目录
-		
 		String filePath = " ";
 		String osName = System.getProperty("os.name");
 		if(Pattern.matches("Linux.*",osName))
-		{      //System.out.println("当前处于Linux系统.");
+		{      
 			   filePath = "/usr/local/TempOpenOffice";
 		}
 		else if(Pattern.matches("Windows.*", osName)) {
-			   //System.out.println("当前处于Windows系统.");
 			   filePath = "D:\\OpenOfficeTemp";
 		}
 		
 		File dir = new File(filePath); 
-		//  判断文件目录是否存在,若不存在则建立OpenOffice文件夹，且是文件夹
         if(!dir.exists()){ 
-        	
-            dir.mkdirs();  //创建了相关文件夹，但若是当前如D盘不存在则执行下方，linux则不会出现该情况
+            dir.mkdirs();  
         }
-		
-        //4.建立好一个输出pdf文件，之后通过OutputStream向该文件写入数据
+
 		File outputfile = new File(filePath+File.separatorChar+newFilePdfName);
-		//  若该文件已经存在则删除
+		
 		if(outputfile.exists())  
 		{
 			outputfile.delete();
 		}
-		//  创建一个新的pdf文件
-		outputfile.createNewFile(); 
-		//  @param outputStream
-		OutputStream outputStream = new FileOutputStream(outputfile);
 		
-		//5.创建两个文件类型的参数
+		outputfile.createNewFile(); 
+		OutputStream outputStream = new FileOutputStream(outputfile);
 		DefaultDocumentFormatRegistry formatReg = new DefaultDocumentFormatRegistry();
 		DocumentFormat officeFormat = formatReg.getFormatByFileExtension(fileType);
 		DocumentFormat pdfFormat = formatReg.getFormatByFileExtension("pdf");
 		
-		//6.开始进行转换，默认host为localhost,当项目部署于linux环境下，则自动为所处环境
 		OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100); 
 		connection.connect();
 		DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
@@ -539,14 +443,9 @@ public class OpenOfficeUtil {
 		connection.disconnect();
 		
 		System.out.println("Convert: office format file converts to pdf success.");
-		
-		//7.转换成功后，便可以进行pdf转换为byte[]类型，数据已经写入了outputfile中
 		byte[] pdfByte =  OpenOfficeUtil.fileToByteArray(outputfile);
 		System.out.println("Convert: pdf file converts to byte[] success.");
-		
-		//8.转换成功，pdf文件进行删除即可,应先删除文件，而对于文件夹则不应删除，否则有多个用户同时使用
-		//  该文件夹时则会出现问题，所以删除自己产生的文件即可
-		//  开启删除文件线程
+
 		RunnableUtil R1 = new RunnableUtil("delete pdf file",newFilePdfName);
 		R1.start();
 		
@@ -559,8 +458,6 @@ public class OpenOfficeUtil {
 	
 	/*
 	 * 1.选择直接返回可用的ResponseEntity<byte[]>类型数据
-	 * 
-	 * 2.参数：
 	 * @param：传入需要转换的office文件路径
 	 */
 	
@@ -571,61 +468,51 @@ public class OpenOfficeUtil {
 		String fileType = fileName.substring(fileName.lastIndexOf(".")+1);
 		
 		if(!isOfficeFormat(fileType))
-		 { /*2.不满足文件要求 */
+		 {   /*2.不满足文件要求 */
 		    throw new Exception("请选择office格式文件!");
 		 }
 		
 		String newFilePdfName =  IdUtil.fastSimpleUUID() + ".pdf";
 		
         byte[] buffFile = OpenOfficeUtil.fileToByteArray(officefile);
-		
-		
-		
 		System.out.println("Accept : accept fastdfs' data success.");
-		
-		//2.将字节数组直接放置于输入流中，这是第一个 @param inputStream
+
 		InputStream inputStream = new ByteArrayInputStream(buffFile);
 		
 		System.out.println("inputStream: "+inputStream.toString());
-		//3.设置转换之后的pdfname，且设置文件夹路径
-		//  创建了一个文件目录，若不存在则建立该目录
 		
 		String filePath = " ";
 		String osName = System.getProperty("os.name");
 		if(Pattern.matches("Linux.*",osName))
-		{      //System.out.println("当前处于Linux系统.");
+		{     
 			   filePath = "/usr/local/TempOpenOffice";
 		}
-		else if(Pattern.matches("Windows.*", osName)) {
-			   //System.out.println("当前处于Windows系统.");
+		else if(Pattern.matches("Windows.*", osName)) 
+		{
 			   filePath = "D:\\OpenOfficeTemp";
 		}
 		
 		File dir = new File(filePath); 
-		//  判断文件目录是否存在,若不存在则建立OpenOffice文件夹，且是文件夹
         if(!dir.exists()){ 
         	
-            dir.mkdirs();  //创建了相关文件夹，但若是当前如D盘不存在则执行下方，linux则不会出现该情况
+            dir.mkdirs();  
         }
 		
-        //4.建立好一个输出pdf文件，之后通过OutputStream向该文件写入数据
 		File outputfile = new File(filePath+File.separatorChar+newFilePdfName);
-		//  若该文件已经存在则删除
+		
 		if(outputfile.exists())  
 		{
 			outputfile.delete();
 		}
-		//  创建一个新的pdf文件
+		
 		outputfile.createNewFile(); 
-		//  @param outputStream
+		
 		OutputStream outputStream = new FileOutputStream(outputfile);
 		
-		//5.创建两个文件类型的参数
 		DefaultDocumentFormatRegistry formatReg = new DefaultDocumentFormatRegistry();
 		DocumentFormat officeFormat = formatReg.getFormatByFileExtension(fileType);
 		DocumentFormat pdfFormat = formatReg.getFormatByFileExtension("pdf");
 		
-		//6.开始进行转换，默认host为localhost,当项目部署于linux环境下，则自动为所处环境
 		OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100); 
 		connection.connect();
 		DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
@@ -637,13 +524,9 @@ public class OpenOfficeUtil {
 		
 		System.out.println("Convert: office format file converts to pdf success.");
 		
-		//7.转换成功后，便可以进行pdf转换为byte[]类型，数据已经写入了outputfile中
 		byte[] pdfByte =  OpenOfficeUtil.fileToByteArray(outputfile);
 		System.out.println("Convert: pdf file converts to byte[] success.");
 		
-		//8.转换成功，pdf文件进行删除即可,应先删除文件，而对于文件夹则不应删除，否则有多个用户同时使用
-		//  该文件夹时则会出现问题，所以删除自己产生的文件即可
-		//  开启删除文件线程
 		RunnableUtil R1 = new RunnableUtil("delete pdf file",newFilePdfName);
 		R1.start();
 		
