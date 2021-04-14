@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="0" name="com.it.Preview.AppTest" time="0.004" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.vm.version" value="9.0.4+11"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-9.0.4\bin"/>
+    <property name="maven.multiModuleProjectDirectory" value="E:\eclipse2019-6\PreviewFile"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="E:\eclipse2019-6\PreviewFile"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="java.runtime.version" value="9.0.4+11"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\wfy18\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="E:\eclipse2019-6\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf5708972264650564225.tmp"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-9.0.4\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Program Files/Java/jre1.8.0_221/bin/server;C:/Program Files/Java/jre1.8.0_221/bin;C:/Program Files/Java/jre1.8.0_221/lib/amd64;C:\Program Files\Java\jdk-9.0.4\bin\bin;C:\Python27\;C:\Python27\Scripts;E:\Xftp\;E:\XShell\;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;c:\Program Files (x86)\Microsoft SQL Server\90\Tools\binn\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;D:\Program Files\Micosoft SQL Server\100\Tools\Binn\;D:\Program Files\Micosoft SQL Server\100\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\;C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\PrivateAssemblies\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\Java\jdk-9.0.4\bin;E:\apache-tomcat-9.0.19\bin;E:\pandownload;E:\phantomjs-2.1.1-windows\bin;E:\python-3.7.3\geckodriver;E:\NASM-2.14.03RC2;E:\gcc\gcc\bin;E:\Vim\vim81;C:\Users\wfy18\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Netwide Assembler 2.14.03rc2;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\gedit;C:\ProgramData\chocolatey\bin;D:\Mingwinstall\mingw64\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;E:\GradeFourTrainingPro\apache-maven-3.3.9\bin;E:\Node\node_global;E:\Node\;E:\Git\cmd;E:\Gpg4win\..\GnuPG\bin;E:\python-3.7.3\Scripts\;E:\python-3.7.3\;C:\Users\wfy18\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;C:\Users\wfy18\AppData\Local\Microsoft\WindowsApps;D:\Mingwinstall\mingw64\bin;&quot;E:\JAVA11\bin;E:\JAVA11\jre\bin;&quot;;E:\Microsoft VS Code\bin;C:\Users\wfy18\AppData\Roaming\npm;C:\Users\wfy18\.dotnet\tools;E:\eclipse;;."/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="53.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="user.home" value="C:\Users\wfy18"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="9"/>
+    <property name="user.name" value="wfy18"/>
+    <property name="java.class.path" value="E:\GradeFourTrainingPro\apache-maven-3.3.9\boot\plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="9"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B -gs E:\GradeFourTrainingPro\settings.xml -s E:\GradeFourTrainingPro\settings.xml install"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-9.0.4"/>
+    <property name="user.language" value="zh"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="9.0.4"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="E:\GradeFourTrainingPro\apache-maven-3.3.9"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.java.com/bugreport/"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="com.it.Preview.AppTest" name="testApp" time="0.004"/>
+</testsuite>
